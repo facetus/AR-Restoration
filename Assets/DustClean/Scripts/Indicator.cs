@@ -82,9 +82,6 @@ namespace cleanDust
             {
                 this.gameObject.SetActive(false);
                 textIndicator.gameObject.SetActive(false);
-
-
-                OnIndicatorRemove?.Invoke();
             });
         }
     }

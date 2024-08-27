@@ -2174,6 +2174,8 @@ MonoBehaviour:
   currentBrush: {fileID: 1513962667}
   dustImage: {fileID: 5731747746817437312, guid: d99fd437c42ed3b428d4da24f1adb55a, type: 3}
   dustSpawnTimer: 0.25
+  indicator: {fileID: 1834536394}
+  indicatorText: {fileID: 821923711}
 --- !u!114 &1580432561
 MonoBehaviour:
   m_ObjectHideFlags: 0

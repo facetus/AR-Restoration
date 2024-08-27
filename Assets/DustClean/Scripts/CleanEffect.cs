@@ -50,26 +50,15 @@ namespace cleanDust
         private bool canSpawnDust;
         [SerializeField] private float dustSpawnTimer;
 
+        [SerializeField] private GameObject indicator;
+        [SerializeField] private GameObject indicatorText;
+
         private bool allowInput;
 
         //Events;
         public static event Action<bool> OnWin;
 
 
-        private void OnEnable()
-        {
-            Indicator.OnIndicatorRemove += AllowUserInput;
-        }
-
-        private void OnDisable()
-        {
-            Indicator.OnIndicatorRemove -= AllowUserInput;
-        }
-
-        private void AllowUserInput()
-        {
-            allowInput = true;
-        }
 
         void Start()
         {
@@ -80,12 +69,23 @@ namespace cleanDust
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (allowInput)
-            {
-                GetPointPosition(eventData);
-            }
+            if (indicator.activeInHierarchy)
+                StartCoroutine(RemoveIndicators());
+
+            GetPointPosition(eventData);
+            
             
 
+        }
+        IEnumerator RemoveIndicators()
+        {
+            indicator.GetComponent<CanvasGroup>().DOFade(0f, 0.5f);
+            indicatorText.GetComponent<CanvasGroup>().DOFade(0f, 0.5f);
+
+            yield return new WaitForSeconds(0.5f);
+
+            indicator.SetActive(false);
+            indicatorText.SetActive(false);
         }
 
         private void GetPointPosition(PointerEventData eventData)
