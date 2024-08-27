@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 namespace cleanDust
 {
@@ -53,8 +55,8 @@ namespace cleanDust
 
         public override void EndScreen()
         {
-            gamePlay.SetActive(false);
-            endScreen.SetActive(true);
+
+            StartCoroutine(Timer());
             
         }
 
@@ -74,6 +76,16 @@ namespace cleanDust
         public override void StartGame()
         {
             OnStart?.Invoke();
+        }
+
+        IEnumerator Timer()
+        {
+            yield return new WaitForSeconds(1f);
+            gamePlay.GetComponent<CanvasGroup>().DOFade(0f, 1f);
+            gamePlay.SetActive(false);
+            endScreen.SetActive(true);
+            endScreen.GetComponent<CanvasGroup>().DOFade(1f, 1f);
+
         }
     }
 
