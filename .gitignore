@@ -1,0 +1,9 @@
+.collabignore
+.vs/
+.vsconfig
+Assembly-CSharp-firstpass.csproj
+Assembly-CSharp.csproj
+Library/
+Logs/
+Temp/
+obj/
