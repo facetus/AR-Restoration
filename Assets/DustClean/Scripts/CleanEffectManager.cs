@@ -9,6 +9,7 @@ namespace cleanDust
     {
         public static event Action OnStart;
 
+        [SerializeField] private GameObject startScreen;
         [SerializeField] private GameObject gamePlay;
         [SerializeField] private GameObject endScreen;
 
@@ -31,8 +32,7 @@ namespace cleanDust
         {
             //achievementManager = FindObjectOfType<AchievementManager>();
             //bagdeCaseHandler = FindObjectOfType<BagdeCaseHandler>();
-
-            StartGame();
+            EnableStartScreen();
         }
 
         public override void CalculateScore()
@@ -75,7 +75,15 @@ namespace cleanDust
 
         public override void StartGame()
         {
+            startScreen.SetActive(false);
+            gamePlay.GetComponent<CanvasGroup>().DOFade(1f, 1f);
             OnStart?.Invoke();
+        }
+
+        public void EnableStartScreen()
+        {
+            startScreen.SetActive(true);
+            startScreen.GetComponent<CanvasGroup>().DOFade(1f, 1f);
         }
 
         IEnumerator Timer()

@@ -55,9 +55,24 @@ namespace cleanDust
 
         private bool allowInput;
 
+        private bool paused;
         //Events;
         public static event Action<bool> OnWin;
 
+        private void OnEnable()
+        {
+            SettingsController.OnPause += PauseGame;
+        }
+
+        private void OnDisable()
+        {
+            SettingsController.OnPause -= PauseGame;
+        }
+
+        public void PauseGame(bool isPause)
+        {
+            paused = isPause;
+        }
 
 
         void Start()
@@ -72,7 +87,11 @@ namespace cleanDust
             if (indicator.activeInHierarchy)
                 StartCoroutine(RemoveIndicators());
 
-            GetPointPosition(eventData);
+            if (!paused)
+            {
+                GetPointPosition(eventData);
+            }
+            
             
             
 
@@ -102,7 +121,6 @@ namespace cleanDust
             if (topImage.rectTransform.rect.Contains(localPointerPosition))
             {
 
-                Debug.Log("sdf");
                 SpawnDust(localPointerPosition);
                 SpawnBrush(localPointerPosition);
                 CleanUpPosition(localPointerPosition);
@@ -123,17 +141,17 @@ namespace cleanDust
 
         private void SpawnDust(Vector2 localPointerPosition)
         {
-            // Instantiate dustImagePrefab
+            //We spawn our dust image prefab;
             if (dustImage != null && canSpawnDust)
             {
                 canSpawnDust = false;
                 GameObject dustImageInstance = Instantiate(dustImage, this.transform);
 
-                // Set the position
+                //We set the position;
                 RectTransform dustImageRectTransform = dustImageInstance.GetComponent<RectTransform>();
                 dustImageRectTransform.anchoredPosition = localPointerPosition;
 
-                // Optionally, you might want to set the dustImageInstance to active if it's not already
+                
                 dustImageInstance.SetActive(true);
 
 
