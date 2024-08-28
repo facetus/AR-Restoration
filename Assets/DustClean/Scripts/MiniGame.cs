@@ -19,4 +19,6 @@ public abstract class MiniGame : MonoBehaviour
 
     public abstract void EndGame(bool won);
 
+
+
 }
